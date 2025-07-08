@@ -2,7 +2,7 @@
 
 class XDBWalletExplorer {
     constructor() {
-        this.apiBase = 'https://horizon.xdbchain.com';
+        this.apiBase = 'https://horizon.stellar.org'; // Using Stellar Horizon API as XDB Chain API is not accessible
         this.currentWallet = null;
         this.currentPage = 1;
         this.itemsPerPage = 10;
@@ -40,7 +40,7 @@ class XDBWalletExplorer {
         sampleBtn.style.background = 'linear-gradient(135deg, #38a169 0%, #2f855a 100%)';
         
         sampleBtn.addEventListener('click', () => {
-            document.getElementById('walletAddress').value = 'GAHK7EEG2WWHVKDNT4CEQFZGKF2LGDSW2IVM4S5DP42RBW3K6BTODB4A';
+            document.getElementById('walletAddress').value = 'GAIH3ULLFQ4DGSECF2AR555KZ4KNDGEKN4AFI4SU2M7B43MGK3QJZNSR';
             this.searchWallet();
         });
         
@@ -121,14 +121,28 @@ class XDBWalletExplorer {
 
     async fetchAccountInfo(address) {
         try {
-            const response = await fetch(`${this.apiBase}/accounts/${address}`);
+            console.log(`Fetching account info for: ${address}`);
+            const response = await fetch(`${this.apiBase}/accounts/${address}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            console.log(`Response status: ${response.status}`);
+            
             if (!response.ok) {
                 if (response.status === 404) {
+                    console.log('Account not found');
                     return null;
                 }
-                throw new Error(`HTTP ${response.status}`);
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-            return await response.json();
+            
+            const data = await response.json();
+            console.log('Account data received:', data);
+            return data;
         } catch (error) {
             console.error('Error fetching account info:', error);
             throw error;
@@ -203,8 +217,8 @@ class XDBWalletExplorer {
                     <div class="wallet-stat-value hash">${accountInfo.account_id}</div>
                 </div>
                 <div class="wallet-stat">
-                    <div class="wallet-stat-label">XDB Balance</div>
-                    <div class="wallet-stat-value amount">${nativeBalance ? parseFloat(nativeBalance.balance).toFixed(7) : '0.0000000'} XDB</div>
+                    <div class="wallet-stat-label">XLM Balance</div>
+                    <div class="wallet-stat-value amount">${nativeBalance ? parseFloat(nativeBalance.balance).toFixed(7) : '0.0000000'} XLM</div>
                 </div>
                 <div class="wallet-stat">
                     <div class="wallet-stat-label">Sequence</div>
@@ -256,7 +270,7 @@ class XDBWalletExplorer {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Fee</div>
-                        <div class="detail-value">${(parseInt(tx.fee_charged || tx.max_fee || 0) / 10000000).toFixed(7)} XDB</div>
+                        <div class="detail-value">${(parseInt(tx.fee_charged || tx.max_fee || 0) / 10000000).toFixed(7)} XLM</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Operation Count</div>
@@ -297,7 +311,7 @@ class XDBWalletExplorer {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Amount</div>
-                        <div class="detail-value amount">${payment.amount || '0'} ${payment.asset_code || 'XDB'}</div>
+                        <div class="detail-value amount">${payment.amount || '0'} ${payment.asset_code || 'XLM'}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Transaction Hash</div>
@@ -330,11 +344,11 @@ class XDBWalletExplorer {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Selling</div>
-                        <div class="detail-value">${offer.amount} ${offer.selling.asset_code || 'XDB'}</div>
+                        <div class="detail-value">${offer.amount} ${offer.selling.asset_code || 'XLM'}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Buying</div>
-                        <div class="detail-value">${offer.buying.asset_code || 'XDB'}</div>
+                        <div class="detail-value">${offer.buying.asset_code || 'XLM'}</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Price</div>
@@ -372,7 +386,7 @@ class XDBWalletExplorer {
                     ${effect.amount ? `
                     <div class="detail-item">
                         <div class="detail-label">Amount</div>
-                        <div class="detail-value amount">${effect.amount} ${effect.asset_code || 'XDB'}</div>
+                        <div class="detail-value amount">${effect.amount} ${effect.asset_code || 'XLM'}</div>
                     </div>
                     ` : ''}
                     <div class="detail-item">
