@@ -2,7 +2,7 @@
 
 class XDBWalletExplorer {
     constructor() {
-        this.apiBase = 'https://horizon.stellar.org'; // Using Stellar Horizon API as XDB Chain API is not accessible
+        this.apiBase = 'https://horizon.livenet.xdbchain.com';
         this.currentWallet = null;
         this.currentPage = 1;
         this.itemsPerPage = 10;
@@ -218,7 +218,7 @@ class XDBWalletExplorer {
                 </div>
                 <div class="wallet-stat">
                     <div class="wallet-stat-label">XLM Balance</div>
-                    <div class="wallet-stat-value amount">${nativeBalance ? parseFloat(nativeBalance.balance).toFixed(7) : '0.0000000'} XLM</div>
+                    <div class="wallet-stat-value amount">${nativeBalance ? parseFloat(nativeBalance.balance).toFixed(7) : '0.0000000'} XDB</div>
                 </div>
                 <div class="wallet-stat">
                     <div class="wallet-stat-label">Sequence</div>
@@ -270,7 +270,7 @@ class XDBWalletExplorer {
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Fee</div>
-                        <div class="detail-value">${(parseInt(tx.fee_charged || tx.max_fee || 0) / 10000000).toFixed(7)} XLM</div>
+                        <div class="detail-value">${(parseInt(tx.fee_charged || tx.max_fee || 0) / 10000000).toFixed(7)} XDB</div>
                     </div>
                     <div class="detail-item">
                         <div class="detail-label">Operation Count</div>
