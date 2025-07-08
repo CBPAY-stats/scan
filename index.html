@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Wallet Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <i class="fas fa-search"></i> XDB Chain Wallet Explorer
+                </h1>
+                <p class="subtitle">Explore transactions and wallet information on XDB Chain Network</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="input-group">
+                        <input type="text" id="walletAddress" placeholder="Enter wallet address (e.g., GAIH3ULLFQ4DGSECFI2AR555ZK4KNDGEKN4AFI4SU2M7B43MGK3QJZNSR)" class="wallet-input">
+                        <button id="searchBtn" class="search-btn">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    <div class="search-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="includePayments" checked>
+                            <span class="checkmark"></span>
+                            Include payments
+                        </label>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="includeOffers" checked>
+                            <span class="checkmark"></span>
+                            Include offers
+                        </label>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="includeEffects" checked>
+                            <span class="checkmark"></span>
+                            Include effects
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="results-section">
+                <div class="message" id="message"></div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="accountDetails">Account Details</button>
+                    <button class="tab-btn" data-tab="transactions">Transactions</button>
+                    <button class="tab-btn" data-tab="payments">Payments</button>
+                    <button class="tab-btn" data-tab="assets">Assets</button>
+                </div>
+
+                <div class="tab-content active" id="accountDetails"></div>
+                <div class="tab-content" id="transactions"></div>
+                <div class="tab-content" id="payments"></div>
+                <div class="tab-content" id="assets"></div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 XDB Chain Wallet Explorer. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
